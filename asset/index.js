@@ -1,3 +1,29 @@
+const forms = document.getElementById('registreForm');
+
+forms.addEventListener('submit', event => {
+    'use strict'
+    if(!forms.checkValidity()){
+        event.preventDefault();
+        event.stopPropagation();
+        console.log('Prevent Default')
+        forms.classList.add('was-validated')
+    
+    }
+    else{
+        console.log('Formulario Enviado')
+        forms.classList.remove('was-validated')
+        event.preventDefault();
+        event.stopPropagation();
+        
+        enviar();
+        //forms.submit();
+    }
+});
+
+
+
+
+
 function enviar() {
     // Creating variables bescause of reciving data from inputs on html
 
@@ -26,11 +52,9 @@ function enviar() {
     localStorage.setItem("userData", JSON.stringify(arrayUsers)); //Load data on LocaStorage
 
     resetForm.click(); //Reseting the data on form
-    
-    
-
-
 }
+
+
 
 function loadData(object) {
     var arrayUsers = [];
@@ -63,10 +87,11 @@ function printTable(data) {
 
 }
 
-
+    
 
 function deleteData1() {
-    localStorage.clear;
+    localStorage.clear();
+    window.loadData();
 }
 
 
