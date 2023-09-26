@@ -12,9 +12,8 @@ forms.addEventListener('submit', event => {
     else{
         console.log('Formulario Enviado')
         forms.classList.remove('was-validated')
-        event.preventDefault();
-        event.stopPropagation();
-        
+        //event.preventDefault();
+        //event.stopPropagation();
         enviar();
         //forms.submit();
     }
@@ -47,7 +46,8 @@ function enviar() {
     };
 
 
-    arrayUsers = loadData(objUser); //Download from Local Storage & edit data
+    arrayUsers = loadData(); //Download from Local Storage & edit data
+    arrayUsers.push(objUser); // Add new data to saved data
     printTable(arrayUsers); // Print data on table
     localStorage.setItem("userData", JSON.stringify(arrayUsers)); //Load data on LocaStorage
 
@@ -55,8 +55,12 @@ function enviar() {
 }
 
 
-
-function loadData(object) {
+/*These fuctions and  comands helps to:
+    download data(loadData)
+    show data(printTable)
+    delet data(deleteData)
+    load data(when window loads) */
+function loadData() {
     var arrayUsers = [];
     var userData = localStorage.getItem("userData");
     if (userData === null) {
@@ -65,7 +69,7 @@ function loadData(object) {
     else {
         arrayUsers = JSON.parse(userData);
     }
-    arrayUsers.push(object);
+    
     return arrayUsers;
 }
 
@@ -76,7 +80,7 @@ function printTable(data) {
         html += "<th scope='row'>" + (i + 1) + "</th>";
         html += "<td>" + data[i].fullName + "</td>";
         html += "<td>" + data[i].birthDate + "</td>";
-        html += "<td>" + data[i].color + "</td>";
+        html += "<td><div class= 'printColor' style= 'background-color:"+ data[i].color +"'></div></td>";
         html += "<td>" + data[i].email + "</td>";
         html += "<td>" + data[i].salaryIncome + "</td>";
         html += "<td>" + data[i].number + "</td>";
@@ -90,9 +94,19 @@ function printTable(data) {
     
 
 function deleteData1() {
-    localStorage.clear();
-    window.loadData();
+    if(confirm("¿Desea eliminar la información?")){
+        localStorage.clear();
+        var arrayUsers = loadData(); //Download from Local Storage & edit data
+        printTable(arrayUsers); // Print data on table
+    }
 }
+
+window.addEventListener("load",()=>{
+    console.log("La pagina cargo")
+    var arrayUsers = loadData(); //Download from Local Storage & edit data
+        printTable(arrayUsers); // Print data on table
+}
+)
 
 
 
