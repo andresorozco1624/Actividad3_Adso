@@ -4,3 +4,8 @@
     width: 25px;
     height: 25px;
 }
+
+.eliminar,.editar{
+    cursor:pointer;
+
+}
